@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Vladimir Andrienko](https://up.htmlacademy.ru/javascript/17/user/771791).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Буртылёв](https://htmlacademy.ru/profile/id3341).
 
 ---
 
