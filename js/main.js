@@ -32,8 +32,20 @@ var data = generateData(8);
 
 // Задание №2 У блока .map уберите класс .map--faded.
 // Получаем элементы с классом map. Используем селектор.
-
 var map = document.querySelector('.map');
 // Удаляем класс map--faded у элемента map
 map.classList.remove('map--faded');
 
+// Задание №3 На основе данных, созданных в первом пункте, создайте DOM-элементы, соответствующие меткам на карте, и заполните их данными из массива.
+//  Итоговую разметку метки .map__pin можно взять из шаблона #pin.
+// У метки должны быть следующие данные:
+// Координаты: style="left: {{location.x}}px; top: {{location.y}}px;"
+// src="{{author.avatar}}"
+// alt="{{заголовок объявления}}"
+// Обратите внимание. Координаты X и Y, которые вы вставите в разметку, это не координаты
+// левого верхнего угла блока метки, а координаты, на которые указывает метка своим острым концом.
+//  Чтобы найти эту координату нужно учесть размеры элемента с меткой.
+var PIN_TEMPLATE = document.querySelector('#pin').content.querySelector('.map__pin');
+PIN_TEMPLATE.cloneNode(true);
+var textElem = document.createTextNode('Тут был я11111111111111111111111111')
+PIN_TEMPLATE.appendChild(textElem);
