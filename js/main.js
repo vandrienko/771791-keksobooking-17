@@ -20,15 +20,11 @@ function generateData(count) {
     announcementArray.push(announcement);
     console.log('announcement11', announcementArray);
   }
-  // return announcement;
+  return announcement;
 }
 
-var data = generateData(8);
-// console.log('data1', data);
-// 1. функция получения рандомного значения из заданного интервала
-// function getRandomInteger(min, max) {
-//   return Math.round(Math.random() * (max - min) + min);
-// }
+var data = generateData(1);
+console.log('data1', data);
 
 // Задание №2 У блока .map уберите класс .map--faded.
 // Получаем элементы с классом map. Используем селектор.
@@ -45,7 +41,20 @@ map.classList.remove('map--faded');
 // Обратите внимание. Координаты X и Y, которые вы вставите в разметку, это не координаты
 // левого верхнего угла блока метки, а координаты, на которые указывает метка своим острым концом.
 //  Чтобы найти эту координату нужно учесть размеры элемента с меткой.
-var PIN_TEMPLATE = document.querySelector('#pin').content.querySelector('.map__pin');
-PIN_TEMPLATE.cloneNode(true);
-var textElem = document.createTextNode('Тут был я11111111111111111111111111')
-PIN_TEMPLATE.appendChild(textElem);
+var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+
+function createPin(obj) {
+  var templateCopy = pinTemplate.cloneNode(true);
+  var pinImg = templateCopy.querySelector('img');
+  templateCopy.style = "left: " + obj.location.x + "px;" + "top: " + obj.location.y + "px;"
+  pinImg.src = obj.author.avatar;
+  pinImg.alt = 'заголовок объявления';
+  return templateCopy
+}
+createPin(data);
+console.log('DOM-элементы',data);
+
+// Задание №3 Отрисуйте сгенерированные DOM-элементы в блок .map__pins.
+//  Для вставки элементов используйте DocumentFragment
+var pins = [];
+appendChild(data)
