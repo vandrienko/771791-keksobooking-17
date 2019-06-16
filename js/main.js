@@ -19,15 +19,15 @@ function getRandomElementArray(array) {
   return array [randomIndexArray];
 }
 
-function addZeros(number, len) {
-  var result = String(number);
-  if (String(number).length < len) {
-    for (var i = 0; i < len - String(number).length; i++) {
-      result = 0 + result;
-    }
-  }
-  return result;
-}
+// function addZeros(number, len) {
+//   var result = String(number);
+//   if (String(number).length < len) {
+//     for (var i = 0; i < len - String(number).length; i++) {
+//       result = 0 + result;
+//     }
+//   }
+//   return result;
+// }
 
 // Создайте массив, состоящий из 8 сгенерированных JS объектов, которые будут описывать похожие объявления неподалёку. Структура объектов должна быть следующей:
 function generateData(count) {
@@ -35,7 +35,7 @@ function generateData(count) {
   for (var i = 0; i < count; i++) {
     var announcement = {
       author: {
-        avatar: 'img/avatars/user' + addZeros(i + 1, 2) + '.png' /* строка, адрес изображения вида img/avatars/user{{xx}}.png, где {{xx}} это число от 1 до 8 с ведущим нулём. Например, 01, 02 и т. д. Адреса изображений не повторяются */
+        avatar: 'img/avatars/user0' + (i + 1) + '.png' /* строка, адрес изображения вида img/avatars/user{{xx}}.png, где {{xx}} это число от 1 до 8 с ведущим нулём. Например, 01, 02 и т. д. Адреса изображений не повторяются */
       },
       offer: {
         type: getRandomElementArray(typesOfSentences)/* строка с одним из четырёх фиксированных значений: palace, flat, house или bungalo */
