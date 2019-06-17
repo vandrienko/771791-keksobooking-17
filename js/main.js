@@ -5,7 +5,7 @@ var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pi
 var typesOfSentences = ['palace', 'flat', 'house', 'bungalo'];
 
 var data = generateData(8);
-var pins = [];
+var pins = createPins(data);
 
 // 1. функция получения рандомного значения из заданного интервала
 function getRandomInteger(min, max) {
@@ -18,16 +18,6 @@ function getRandomElementArray(array) {
   var randomIndexArray = getRandomInteger(0, maxIndexArray);
   return array [randomIndexArray];
 }
-
-// function addZeros(number, len) {
-//   var result = String(number);
-//   if (String(number).length < len) {
-//     for (var i = 0; i < len - String(number).length; i++) {
-//       result = 0 + result;
-//     }
-//   }
-//   return result;
-// }
 
 // Создайте массив, состоящий из 8 сгенерированных JS объектов, которые будут описывать похожие объявления неподалёку. Структура объектов должна быть следующей:
 function generateData(count) {
@@ -65,17 +55,11 @@ function activateMap() {
 
 // Задание №3 На основе данных, созданных в первом пункте, создайте DOM-элементы, соответствующие меткам на карте, и заполните их данными из массива.
 //  Итоговую разметку метки .map__pin можно взять из шаблона #pin.
-// У метки должны быть следующие данные:
-// Координаты: style="left: {{location.x}}px; top: {{location.y}}px;"
-// src="{{author.avatar}}"
-// alt="{{заголовок объявления}}"
-// Обратите внимание. Координаты X и Y, которые вы вставите в разметку, это не координаты
-// левого верхнего угла блока метки, а координаты, на которые указывает метка своим острым концом.
-//  Чтобы найти эту координату нужно учесть размеры элемента с меткой.
 function createPin(obj) {
   var templateCopy = pinTemplate.cloneNode(true);
   var pinImg = templateCopy.querySelector('img');
-  templateCopy.style = 'left: ' + obj.location.x + 'px;' + 'top: ' + obj.location.y + 'px;';
+  templateCopy.style.left = obj.location.x + 'px';
+  templateCopy.style.top = obj.location.y + 'px';
   pinImg.src = obj.author.avatar;
   pinImg.alt = 'заголовок объявления';
   return templateCopy;
@@ -91,8 +75,11 @@ function insertPins(arr) {
   mapPins.appendChild(fragment);
 }
 
-for (var i = 0; i < data.length; i++) {
-  pins.push(createPin(data[i]));
+function createPins(arr) {
+  var result = [];
+  for (var i = 0; i < arr.length; i++) {
+    result.push(createPin(arr[i]));
+  }
+  return result;
 }
-
 insertPins(pins);
