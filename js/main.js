@@ -50,6 +50,10 @@ function activateMap() {
   adForm.classList.remove('ad-form--disabled');
 }
 
+function activateForm() {
+  adForm.classList.remove('ad-form--disabled');
+}
+
 // Функция удаляем класс map--faded у элемента map
 // function deactivateMap() {
 //   map.classList.add('map--faded');
@@ -96,6 +100,7 @@ var onButtonClick = function () {
   insertPins(pins);
   // включаем элементы формы
   inableItems(adForm);
+  activateForm();
 };
 
 pinMain.addEventListener('click', onButtonClick);
