@@ -3,10 +3,8 @@ var map = document.querySelector('.map');
 var mapPins = map.querySelector('.map__pins');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var typesOfSentences = ['palace', 'flat', 'house', 'bungalo'];
-var adForm = document.querySelector('.ad-form');
 var data = generateData(8);
 var pins = createPins(data);
-var address = adForm.querySelector('#address');
 
 // 1. функция получения рандомного значения из заданного интервала
 function getRandomInteger(min, max) {
@@ -41,25 +39,6 @@ function generateData(count) {
   return result;
 }
 
-// Задание №2 У блока .map уберите класс .map--faded.
-// Показываем карту
-// activateMap();
-// Функция добоаляем класс map--faded у элемента map
-function activateMap() {
-  map.classList.remove('map--faded');
-  adForm.classList.remove('ad-form--disabled');
-}
-
-function activateForm() {
-  adForm.classList.remove('ad-form--disabled');
-}
-
-// Функция удаляем класс map--faded у элемента map
-// function deactivateMap() {
-//   map.classList.add('map--faded');
-//   adForm.classList.add('ad-form--disabled');
-// }
-
 // Задание №3 На основе данных, созданных в первом пункте, создайте DOM-элементы, соответствующие меткам на карте, и заполните их данными из массива.
 //  Итоговую разметку метки .map__pin можно взять из шаблона #pin.
 function createPin(obj) {
@@ -72,7 +51,7 @@ function createPin(obj) {
   return templateCopy;
 }
 
-// Задание №3 Отрисуйте сгенерированные DOM-элементы в блок .map__pins.
+// Задание №4 Отрисуйте сгенерированные DOM-элементы в блок .map__pins.
 //  Для вставки элементов используйте DocumentFragment
 // функция отрисовки пинов
 function insertPins(arr) {
@@ -91,19 +70,19 @@ function createPins(arr) {
   return result;
 }
 
+// Модуль 4
+var adForm = document.querySelector('.ad-form');
+var address = adForm.querySelector('#address');
 var pinMain = document.querySelector('.map__pin--main');
 
-var onButtonClick = function () {
-  // Показываем карту
-  activateMap();
-  // вызов функции отрисовки пинов
-  insertPins(pins);
-  // включаем элементы формы
-  inableItems(adForm);
-  activateForm();
-};
 
-pinMain.addEventListener('click', onButtonClick);
+// Функция добоаляем класс map--faded у элемента map
+function activateMap() {
+  map.classList.remove('map--faded');
+  // adForm.classList.remove('ad-form--disabled');
+}
+
+
 // отключаем элементы формы
 disableItems(adForm);
 function disableItems(arr) {
@@ -126,3 +105,15 @@ function setAddress(x, y) {
 }
 
 setAddress(pinMain.offsetLeft, pinMain.offsetTop);
+
+var onButtonClick = function () {
+  // Показываем карту
+  activateMap();
+  // вызов функции отрисовки пинов
+  insertPins(pins);
+  // включаем элементы формы
+  inableItems(adForm);
+};
+
+// Отслеживаем нажатия на главный пин и вызываем функцию onButtonClick.
+pinMain.addEventListener('click', onButtonClick);
