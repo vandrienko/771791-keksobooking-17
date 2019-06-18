@@ -3,9 +3,10 @@ var map = document.querySelector('.map');
 var mapPins = map.querySelector('.map__pins');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var typesOfSentences = ['palace', 'flat', 'house', 'bungalo'];
-
+var adForm = document.querySelector('.ad-form');
 var data = generateData(8);
 var pins = createPins(data);
+var address = adForm.querySelector('#address');
 
 // 1. функция получения рандомного значения из заданного интервала
 function getRandomInteger(min, max) {
@@ -42,15 +43,17 @@ function generateData(count) {
 
 // Задание №2 У блока .map уберите класс .map--faded.
 // Показываем карту
-activateMap();
+// activateMap();
 // Функция добоаляем класс map--faded у элемента map
 function activateMap() {
   map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
 }
 
 // Функция удаляем класс map--faded у элемента map
 // function deactivateMap() {
 //   map.classList.add('map--faded');
+//   adForm.classList.add('ad-form--disabled');
 // }
 
 // Задание №3 На основе данных, созданных в первом пункте, создайте DOM-элементы, соответствующие меткам на карте, и заполните их данными из массива.
@@ -67,6 +70,7 @@ function createPin(obj) {
 
 // Задание №3 Отрисуйте сгенерированные DOM-элементы в блок .map__pins.
 //  Для вставки элементов используйте DocumentFragment
+// функция отрисовки пинов
 function insertPins(arr) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < arr.length; i++) {
@@ -82,4 +86,38 @@ function createPins(arr) {
   }
   return result;
 }
-insertPins(pins);
+
+var pinMain = document.querySelector('.map__pin--main');
+
+var onButtonClick = function () {
+  // Показываем карту
+  activateMap();
+  // вызов функции отрисовки пинов
+  insertPins(pins);
+  // включаем элементы формы
+  inableItems(adForm);
+};
+
+pinMain.addEventListener('click', onButtonClick);
+// отключаем элементы формы
+disableItems(adForm);
+function disableItems(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    arr[i].setAttribute('disabled', 'disabled');
+  }
+}
+
+// включаем элементы формы
+// inableItems(adForm);
+function inableItems(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    arr[i].removeAttribute('disabled');
+  }
+}
+
+// функция передачи кординат пина в инпут
+function setAddress(x, y) {
+  address.value = 'x = ' + x + ', ' + 'y = ' + y;
+}
+
+setAddress(pinMain.offsetLeft, pinMain.offsetTop);
