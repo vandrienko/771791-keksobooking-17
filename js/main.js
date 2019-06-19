@@ -73,38 +73,51 @@ function createPins(arr) {
 // Модуль 4
 var adForm = document.querySelector('.ad-form');
 var address = adForm.querySelector('#address');
+var formElements = adForm.querySelectorAll('fieldset');
 var pinMain = document.querySelector('.map__pin--main');
 
-
-// Функция добоаляем класс map--faded у элемента map
+// Функция удаеляет класс map--faded у элемента map
 function activateMap() {
   map.classList.remove('map--faded');
-  // adForm.classList.remove('ad-form--disabled');
 }
 
+// Функция удаляет класс ad-form--disabled у формы что бы был виден фильтр
+function activateForm() {
+  adForm.classList.remove('ad-form--disabled');
+}
 
-// отключаем элементы формы
-disableItems(adForm);
-function disableItems(arr) {
+// блокируем элементы формы
+disableFormElements(formElements);
+function disableFormElements(arr) {
   for (var i = 0; i < arr.length; i++) {
     arr[i].setAttribute('disabled', 'disabled');
   }
 }
 
 // включаем элементы формы
-// inableItems(adForm);
-function inableItems(arr) {
+function inableFormElements(arr) {
   for (var i = 0; i < arr.length; i++) {
     arr[i].removeAttribute('disabled');
   }
 }
+// Получения серидины объекта
+function getCoordinates(object) {
+  var coordinates = {
+    x: object.offsetLeft + object.offsetWidth / 2,
+    y: object.offsetTop + object.offsetHeight / 2
+  };
+  return coordinates;
+}
+
+// Вызываем функцию подучения центра объекты
+var coordinates = getCoordinates(pinMain);
 
 // функция передачи кординат пина в инпут
 function setAddress(x, y) {
-  address.value = 'x = ' + x + ', ' + 'y = ' + y;
+  address.value = x + ', ' + y;
 }
 
-setAddress(pinMain.offsetLeft, pinMain.offsetTop);
+setAddress(coordinates.x, coordinates.y);
 
 var onButtonClick = function () {
   // Показываем карту
@@ -112,7 +125,9 @@ var onButtonClick = function () {
   // вызов функции отрисовки пинов
   insertPins(pins);
   // включаем элементы формы
-  inableItems(adForm);
+  inableFormElements(formElements);
+  // ключаем фильтр
+  activateForm();
 };
 
 // Отслеживаем нажатия на главный пин и вызываем функцию onButtonClick.
