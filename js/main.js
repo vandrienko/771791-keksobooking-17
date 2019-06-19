@@ -90,12 +90,13 @@ function activateForm() {
 disableFormElements(formElements);
 function disableFormElements(arr) {
   for (var i = 0; i < arr.length; i++) {
-    arr[i].setAttribute('disabled', 'disabled');
+    // arr[i].setAttribute('disabled', 'disabled');
+    arr[i].disabled = true;
   }
 }
 
 // включаем элементы формы
-function inableFormElements(arr) {
+function enableFormElements(arr) {
   for (var i = 0; i < arr.length; i++) {
     arr[i].removeAttribute('disabled');
   }
@@ -125,7 +126,7 @@ var onButtonClick = function () {
   // вызов функции отрисовки пинов
   insertPins(pins);
   // включаем элементы формы
-  inableFormElements(formElements);
+  enableFormElements(formElements);
   // ключаем фильтр
   activateForm();
 };
