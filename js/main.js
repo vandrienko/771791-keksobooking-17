@@ -75,7 +75,9 @@ var adForm = document.querySelector('.ad-form');
 var address = adForm.querySelector('#address');
 var formElements = adForm.querySelectorAll('fieldset');
 var pinMain = document.querySelector('.map__pin--main');
-
+var filterForm = document.querySelector('.map__filters');
+var mapFilter = filterForm.querySelectorAll('.map__filter');
+var housingFeatures = filterForm.querySelectorAll('#housing-features');
 // Функция удаеляет класс map--faded у элемента map
 function activateMap() {
   map.classList.remove('map--faded');
@@ -88,9 +90,12 @@ function activateForm() {
 
 // блокируем элементы формы
 disableFormElements(formElements);
+
+// блокируем элементы фильтра
+disableFormElements(mapFilter);
+disableFormElements(housingFeatures);
 function disableFormElements(arr) {
   for (var i = 0; i < arr.length; i++) {
-    // arr[i].setAttribute('disabled', 'disabled');
     arr[i].disabled = true;
   }
 }
@@ -98,7 +103,7 @@ function disableFormElements(arr) {
 // включаем элементы формы
 function enableFormElements(arr) {
   for (var i = 0; i < arr.length; i++) {
-    arr[i].removeAttribute('disabled');
+    arr[i].disabled = false;
   }
 }
 // Получения серидины объекта
@@ -110,7 +115,7 @@ function getCoordinates(object) {
   return coordinates;
 }
 
-// Вызываем функцию подучения центра объекты
+// Вызываем функцию получения центра объекта
 var coordinates = getCoordinates(pinMain);
 
 // функция передачи кординат пина в инпут
@@ -127,8 +132,11 @@ var onButtonClick = function () {
   insertPins(pins);
   // включаем элементы формы
   enableFormElements(formElements);
-  // ключаем фильтр
+  // Включаем фильтр
   activateForm();
+  // включаем элементы фильтра
+  enableFormElements(mapFilter);
+  enableFormElements(housingFeatures);
 };
 
 // Отслеживаем нажатия на главный пин и вызываем функцию onButtonClick.
