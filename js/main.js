@@ -3,7 +3,6 @@ var map = document.querySelector('.map');
 var mapPins = map.querySelector('.map__pins');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var typesOfSentences = ['palace', 'flat', 'house', 'bungalo'];
-
 var data = generateData(8);
 var pins = createPins(data);
 
@@ -40,19 +39,6 @@ function generateData(count) {
   return result;
 }
 
-// Задание №2 У блока .map уберите класс .map--faded.
-// Показываем карту
-activateMap();
-// Функция добоаляем класс map--faded у элемента map
-function activateMap() {
-  map.classList.remove('map--faded');
-}
-
-// Функция удаляем класс map--faded у элемента map
-// function deactivateMap() {
-//   map.classList.add('map--faded');
-// }
-
 // Задание №3 На основе данных, созданных в первом пункте, создайте DOM-элементы, соответствующие меткам на карте, и заполните их данными из массива.
 //  Итоговую разметку метки .map__pin можно взять из шаблона #pin.
 function createPin(obj) {
@@ -65,8 +51,9 @@ function createPin(obj) {
   return templateCopy;
 }
 
-// Задание №3 Отрисуйте сгенерированные DOM-элементы в блок .map__pins.
+// Задание №4 Отрисуйте сгенерированные DOM-элементы в блок .map__pins.
 //  Для вставки элементов используйте DocumentFragment
+// функция отрисовки пинов
 function insertPins(arr) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < arr.length; i++) {
@@ -82,4 +69,75 @@ function createPins(arr) {
   }
   return result;
 }
-insertPins(pins);
+
+// Модуль 4
+var adForm = document.querySelector('.ad-form');
+var address = adForm.querySelector('#address');
+var formElements = adForm.querySelectorAll('fieldset');
+var pinMain = document.querySelector('.map__pin--main');
+var filterForm = document.querySelector('.map__filters');
+var mapFilter = filterForm.querySelectorAll('.map__filter');
+var housingFeatures = filterForm.querySelectorAll('#housing-features');
+// Функция удаеляет класс map--faded у элемента map
+function activateMap() {
+  map.classList.remove('map--faded');
+}
+
+// Функция удаляет класс ad-form--disabled у формы что бы был виден фильтр
+function activateForm() {
+  adForm.classList.remove('ad-form--disabled');
+}
+
+// блокируем элементы формы
+disableFormElements(formElements);
+
+// блокируем элементы фильтра
+disableFormElements(mapFilter);
+disableFormElements(housingFeatures);
+function disableFormElements(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    arr[i].disabled = true;
+  }
+}
+
+// включаем элементы формы
+function enableFormElements(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    arr[i].disabled = false;
+  }
+}
+// Получения серидины объекта
+function getCoordinates(object) {
+  var coordinates = {
+    x: object.offsetLeft + object.offsetWidth / 2,
+    y: object.offsetTop + object.offsetHeight / 2
+  };
+  return coordinates;
+}
+
+// Вызываем функцию получения центра объекта
+var coordinates = getCoordinates(pinMain);
+
+// функция передачи кординат пина в инпут
+function setAddress(x, y) {
+  address.value = x + ', ' + y;
+}
+
+setAddress(coordinates.x, coordinates.y);
+
+var onButtonClick = function () {
+  // Показываем карту
+  activateMap();
+  // вызов функции отрисовки пинов
+  insertPins(pins);
+  // включаем элементы формы
+  enableFormElements(formElements);
+  // Включаем фильтр
+  activateForm();
+  // включаем элементы фильтра
+  enableFormElements(mapFilter);
+  enableFormElements(housingFeatures);
+};
+
+// Отслеживаем нажатия на главный пин и вызываем функцию onButtonClick.
+pinMain.addEventListener('click', onButtonClick);
