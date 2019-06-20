@@ -141,3 +141,24 @@ var onButtonClick = function () {
 
 // Отслеживаем нажатия на главный пин и вызываем функцию onButtonClick.
 pinMain.addEventListener('click', onButtonClick);
+
+// module4-task2
+
+// 3.5. Поля «Время заезда» и «Время выезда» синхронизированы: при изменении значения одного поля, во втором выделяется соответствующее ему.
+// Например, если время заезда указано «после 14», то время выезда будет равно «до 14» и наоборот.
+var timeinElement = document.querySelector('#timein');
+var timeinElementValue = timeinElement.querySelectorAll('value');
+
+var timeoutElement = document.querySelector('#timeout');
+var timeoutElementValue = timeoutElement.querySelectorAll('value');
+
+timeinElementValue.value = timeoutElementValue.value;
+
+
+// syncTime(timeinElementValue, timeoutElementValue);
+
+// function syncTime(v1, v2) {
+//   for (var i = 0; i < v1.length; i++) {
+//   i.v2.value =  i.v1.value;
+//   }
+// }
