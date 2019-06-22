@@ -144,21 +144,56 @@ pinMain.addEventListener('click', onButtonClick);
 
 // module4-task2
 
+// 3.3. Поле «Тип жилья» влияет на минимальное значение поля «Цена за ночь»:
+// «Бунгало» — минимальная цена за ночь 0;
+// «Квартира» — минимальная цена за ночь 1 000;
+// «Дом» — минимальная цена 5 000;
+// «Дворец» — минимальная цена 10 000.
+// Вместе с минимальным значением цены нужно изменять и плейсхолдер.
+
+//Тип жилья
+var housingTypeElement = document.querySelector('#type');
+var minElement = housingTypeElement.querySelector('data-min');
+var price = document.querySelector('.price');
+var placeholderElement = document.querySelector('placeholder');
+
+
+var options1 = housingTypeElement.options/* .dataset.min *//* .option.selectedIndex */;
+// var currentOption = options[options.selectedIndex];
+console.log('housingTypeElement', options1);
+// housingTypeElement.addEventListener('change', onСhange);
+
+// Копируем значение времени заезда в время выезда
+function onСhange() {
+  var options1 = typeOfHousing.options;
+  console.log('housingTypeElement', options1);
+  // housingTypeElement.value = price.value;
+  alert(minElement);
+}
+
+
+
+
+
 // 3.5. Поля «Время заезда» и «Время выезда» синхронизированы: при изменении значения одного поля, во втором выделяется соответствующее ему.
 // Например, если время заезда указано «после 14», то время выезда будет равно «до 14» и наоборот.
+
+// Время заезда
 var timeinElement = document.querySelector('#timein');
-var timeinElementValue = timeinElement.querySelectorAll('value');
 
+// Время выезда
 var timeoutElement = document.querySelector('#timeout');
-var timeoutElementValue = timeoutElement.querySelectorAll('value');
 
-timeinElementValue.value = timeoutElementValue.value;
+timeinElement.addEventListener('change', onTimeinСhange);
+timeoutElement.addEventListener('change', onTimeoutСhange);
 
+// Копируем значение времени заезда в время выезда
+function onTimeinСhange() {
+  timeoutElement.value = timeinElement.value;
+}
 
-// syncTime(timeinElementValue, timeoutElementValue);
+// Копируем значение времени выезда в время заезда
+function onTimeoutСhange() {
+  timeinElement.value = timeoutElement.value;
+}
 
-// function syncTime(v1, v2) {
-//   for (var i = 0; i < v1.length; i++) {
-//   i.v2.value =  i.v1.value;
-//   }
-// }
