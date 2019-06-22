@@ -151,28 +151,25 @@ pinMain.addEventListener('click', onButtonClick);
 // «Дворец» — минимальная цена 10 000.
 // Вместе с минимальным значением цены нужно изменять и плейсхолдер.
 
-//Тип жилья
-var housingTypeElement = document.querySelector('#type');
-var minElement = housingTypeElement.querySelector('data-min');
-var price = document.querySelector('.price');
-var placeholderElement = document.querySelector('placeholder');
+// Тип жилья
+var typeOfHousing = document.querySelector('#type');
+var price = document.querySelector('#price');
 
 
-var options1 = housingTypeElement.options/* .dataset.min *//* .option.selectedIndex */;
-// var currentOption = options[options.selectedIndex];
-console.log('housingTypeElement', options1);
-// housingTypeElement.addEventListener('change', onСhange);
-
-// Копируем значение времени заезда в время выезда
-function onСhange() {
-  var options1 = typeOfHousing.options;
-  console.log('housingTypeElement', options1);
-  // housingTypeElement.value = price.value;
-  alert(minElement);
+// Находим дата атрибут data-min_price в разметки
+function onTypeOfHousingClick() {
+  var options = typeOfHousing.options;
+  var currentOption = options[options.selectedIndex];
+  setMinPrice(currentOption.dataset.min_price);
 }
 
+typeOfHousing.addEventListener('change', onTypeOfHousingClick);
 
-
+// записываеи значение дата атрибута в поле min и placeholder. цена за ночь
+function setMinPrice(value) {
+  price.min = value;
+  price.placeholder = value;
+}
 
 
 // 3.5. Поля «Время заезда» и «Время выезда» синхронизированы: при изменении значения одного поля, во втором выделяется соответствующее ему.
