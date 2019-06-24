@@ -143,7 +143,6 @@ var onButtonClick = function () {
 pinMain.addEventListener('click', onButtonClick);
 
 // module4-task2
-
 // 3.3. Поле «Тип жилья» влияет на минимальное значение поля «Цена за ночь»:
 // «Бунгало» — минимальная цена за ночь 0;
 // «Квартира» — минимальная цена за ночь 1 000;
@@ -153,28 +152,18 @@ pinMain.addEventListener('click', onButtonClick);
 
 // Тип жилья
 var housTypeElement = document.querySelector('#type');
-console.log('housTypeElement', housTypeElement);
 var priceElement = document.querySelector('#price');
-console.log('priceElement', priceElement);
+
 var minPrices = {
   bungalo: 0,
   flat: 1000,
   house: 5000,
   palace: 100000
-}
-// И используй его для определения минимальной цены: minPrices[event.target.value]
-// minPrices[event.target.value]
-// Находим дата атрибут data-min_price в разметки
-function onHousTypeElementChange() {
-  housElementTarget = event.target;
-  console.log('housElementTarget', housElementTarget);
-}
+};
 
-// function onHousTypeElementChange() {
-//   var options = housTypeElement.options;
-//   var currentOption = options[options.selectedIndex];
-//   setMinPrice(currentOption.dataset.minPrice);
-// }
+function onHousTypeElementChange(evt) {
+  setMinPrice(minPrices[evt.target.value]);
+}
 
 housTypeElement.addEventListener('change', onHousTypeElementChange);
 
@@ -183,7 +172,6 @@ function setMinPrice(value) {
   priceElement.min = value;
   priceElement.placeholder = value;
 }
-
 
 // 3.5. Поля «Время заезда» и «Время выезда» синхронизированы: при изменении значения одного поля, во втором выделяется соответствующее ему.
 // Например, если время заезда указано «после 14», то время выезда будет равно «до 14» и наоборот.
@@ -206,4 +194,3 @@ function onTimeinСhange() {
 function onTimeoutСhange() {
   timeinElement.value = timeoutElement.value;
 }
-
