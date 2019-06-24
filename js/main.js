@@ -152,23 +152,36 @@ pinMain.addEventListener('click', onButtonClick);
 // Вместе с минимальным значением цены нужно изменять и плейсхолдер.
 
 // Тип жилья
-var typeOfHousing = document.querySelector('#type');
-var price = document.querySelector('#price');
-
-
+var housTypeElement = document.querySelector('#type');
+console.log('housTypeElement', housTypeElement);
+var priceElement = document.querySelector('#price');
+console.log('priceElement', priceElement);
+var minPrices = {
+  bungalo: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 100000
+}
+// И используй его для определения минимальной цены: minPrices[event.target.value]
+// minPrices[event.target.value]
 // Находим дата атрибут data-min_price в разметки
-function onTypeOfHousingClick() {
-  var options = typeOfHousing.options;
-  var currentOption = options[options.selectedIndex];
-  setMinPrice(currentOption.dataset.min_price);
+function onHousTypeElementChange() {
+  housElementTarget = event.target;
+  console.log('housElementTarget', housElementTarget);
 }
 
-typeOfHousing.addEventListener('change', onTypeOfHousingClick);
+// function onHousTypeElementChange() {
+//   var options = housTypeElement.options;
+//   var currentOption = options[options.selectedIndex];
+//   setMinPrice(currentOption.dataset.minPrice);
+// }
+
+housTypeElement.addEventListener('change', onHousTypeElementChange);
 
 // записываеи значение дата атрибута в поле min и placeholder. цена за ночь
 function setMinPrice(value) {
-  price.min = value;
-  price.placeholder = value;
+  priceElement.min = value;
+  priceElement.placeholder = value;
 }
 
 
