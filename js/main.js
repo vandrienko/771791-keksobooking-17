@@ -141,3 +141,56 @@ var onButtonClick = function () {
 
 // Отслеживаем нажатия на главный пин и вызываем функцию onButtonClick.
 pinMain.addEventListener('click', onButtonClick);
+
+// module4-task2
+// 3.3. Поле «Тип жилья» влияет на минимальное значение поля «Цена за ночь»:
+// «Бунгало» — минимальная цена за ночь 0;
+// «Квартира» — минимальная цена за ночь 1 000;
+// «Дом» — минимальная цена 5 000;
+// «Дворец» — минимальная цена 10 000.
+// Вместе с минимальным значением цены нужно изменять и плейсхолдер.
+
+// Тип жилья
+var housTypeElement = document.querySelector('#type');
+var priceElement = document.querySelector('#price');
+
+var minPrices = {
+  bungalo: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 100000
+};
+
+function onHousTypeElementChange(evt) {
+  setMinPrice(minPrices[evt.target.value]);
+}
+
+housTypeElement.addEventListener('change', onHousTypeElementChange);
+
+// записываеи значение дата атрибута в поле min и placeholder. цена за ночь
+function setMinPrice(value) {
+  priceElement.min = value;
+  priceElement.placeholder = value;
+}
+
+// 3.5. Поля «Время заезда» и «Время выезда» синхронизированы: при изменении значения одного поля, во втором выделяется соответствующее ему.
+// Например, если время заезда указано «после 14», то время выезда будет равно «до 14» и наоборот.
+
+// Время заезда
+var timeinElement = document.querySelector('#timein');
+
+// Время выезда
+var timeoutElement = document.querySelector('#timeout');
+
+timeinElement.addEventListener('change', onTimeinСhange);
+timeoutElement.addEventListener('change', onTimeoutСhange);
+
+// Копируем значение времени заезда в время выезда
+function onTimeinСhange() {
+  timeoutElement.value = timeinElement.value;
+}
+
+// Копируем значение времени выезда в время заезда
+function onTimeoutСhange() {
+  timeinElement.value = timeoutElement.value;
+}
