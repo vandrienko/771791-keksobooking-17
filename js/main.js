@@ -5,6 +5,14 @@ var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pi
 var typesOfSentences = ['palace', 'flat', 'house', 'bungalo'];
 var data = generateData(8);
 var pins = createPins(data);
+// Ограничения области перемещения пина
+var MIN_X = 0;
+var MAX_X = 1200;
+var MIN_Y = 130;
+var MAX_Y = 630;
+// Ширина и высота нашего пина.
+var MAIN_PIN_WIDTH = 62;
+var MAIN_PIN_HEIGHT = 82;
 
 // 1. функция получения рандомного значения из заданного интервала
 function getRandomInteger(min, max) {
@@ -74,7 +82,7 @@ function createPins(arr) {
 var adForm = document.querySelector('.ad-form');
 var address = adForm.querySelector('#address');
 var formElements = adForm.querySelectorAll('fieldset');
-var pinMain = document.querySelector('.map__pin--main');
+var mainPinElement = document.querySelector('.map__pin--main');
 var filterForm = document.querySelector('.map__filters');
 var mapFilter = filterForm.querySelectorAll('.map__filter');
 var housingFeatures = filterForm.querySelectorAll('#housing-features');
@@ -107,22 +115,31 @@ function enableFormElements(arr) {
   }
 }
 
-function isMapActive() {
-  return !pinMain.classList.contains('map--faded');
+// Получения серидины объекта
+// function getCoordinates(object) {
+//   var coordinates = {
+//     x: object.offsetLeft + object.offsetWidth / 2,
+//     y: object.offsetTop + object.offsetHeight / 2
+//   };
+//   return coordinates;
+// }
+
+function getMainPinCoordinates() {
+  return {
+    x: Math.floor(mainPinElement.offsetLeft + MAIN_PIN_WIDTH / 2),
+    y: Math.floor(isMapActive() ? mainPinElement.offsetTop + MAIN_PIN_HEIGHT : mainPinElement.offsetTop + MAIN_PIN_HEIGHT / 2)
+  };
 }
 
-// Получения серидины объекта
-function getCoordinates(object) {
-  var coordinates = {
-    con
-    x: object.offsetLeft + object.offsetWidth / 2,
-    y: object.offsetTop + object.offsetHeight / 2
-  };
-  return coordinates;
+// Если карта не активна
+function isMapActive() {
+  var contains = map.classList.contains('map--faded');
+  return !contains;
+  // return !map.classList.contains('map--faded');
 }
 
 // Вызываем функцию получения центра объекта
-var coordinatesCenterPin = getCoordinates(pinMain);
+var coordinatesCenterPin = getMainPinCoordinates();
 
 // функция передачи кординат пина в инпут
 function setAddress(x, y) {
@@ -146,7 +163,7 @@ var onButtonClick = function () {
 };
 
 // Отслеживаем нажатия на главный пин и вызываем функцию onButtonClick.
-// pinMain.addEventListener('click', onButtonClick);
+// mainPinElement.addEventListener('click', onButtonClick);
 
 // module4-task2
 // 3.3. Поле «Тип жилья» влияет на минимальное значение поля «Цена за ночь»:
@@ -201,16 +218,12 @@ function onTimeoutСhange() {
   timeinElement.value = timeoutElement.value;
 }
 
-// module5-task1
-var MIN_X = 0;
-var MAX_X = 1200;
-var MIN_Y = 130;
-var MAX_Y = 630;
+// +++++++++++++++++++++++++ module5-task1 ++++++++++++++++++++++++++++++
 
-var mapPin = document.querySelector('.map__pin');
-// pinMain.addEventListener('click', onButtonClick);
+// var mapPin = document.querySelector('.map__pin');
 
-pinMain.addEventListener('mousedown', function (evt) {
+
+mainPinElement.addEventListener('mousedown', function (evt) {
   // Вызываю функцию от рисовки остальных пинов и разблокировки формы.
   onButtonClick();
 
@@ -223,9 +236,10 @@ pinMain.addEventListener('mousedown', function (evt) {
   // При каждом движении мыши нам нужно обновлять смещение относительно первоначальной точки,
   //  чтобы диалог смещался на необходимую величину.
   var onMouseMove = function (moveEvt) {
-      var shift = {
-      x: startCoordsPin.x - moveEvt.clientX,
-      y: startCoordsPin.y - moveEvt.clientY
+
+    var shift = {
+      x: mainPinElement.offsetLeft - (startCoordsPin.x - moveEvt.clientX),
+      y: mainPinElement.offsetTop - (startCoordsPin.y - moveEvt.clientY)
     };
 
     startCoordsPin = {
@@ -233,9 +247,28 @@ pinMain.addEventListener('mousedown', function (evt) {
       y: moveEvt.clientY
     };
 
-    mapPin.style.top = (mapPin.offsetTop - shift.y) + 'px';
-    mapPin.style.left = (mapPin.offsetLeft - shift.x) + 'px';
+    // Вызываем функцию получения центра объекта
+    var newCoordinatesPin = getMainPinCoordinates();
+    // Передаем новые координаты в инпут
+    setAddress(newCoordinatesPin.x, newCoordinatesPin.y);
+    var isCoordsValid = validateCoords(startCoordsPin);
+
+    //  Записываем нашему пину новые координаты
+    if (isCoordsValid.x) {
+      mainPinElement.style.left = shift.x + 'px';
+    }
+
+    if (isCoordsValid.y) {
+      mainPinElement.style.top = shift.y + 'px';
+    }
   };
+
+  function validateCoords(coordinates) {
+    return {
+      x: coordinates.x <= MAX_X - MAIN_PIN_WIDTH / 2 && coordinates.x >= MIN_X - MAIN_PIN_WIDTH / 2,
+      y: coordinates.y <= MAX_Y - MAIN_PIN_HEIGHT && coordinates.y >= MIN_Y - MAIN_PIN_HEIGHT
+    };
+  }
 
   // При отпускании кнопки мыши нужно переставать слушать события движения мыши.
   var onMouseUp = function (upEvt) {
