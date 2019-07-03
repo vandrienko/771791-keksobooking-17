@@ -106,9 +106,15 @@ function enableFormElements(arr) {
     arr[i].disabled = false;
   }
 }
+
+function isMapActive() {
+  return !pinMain.classList.contains('map--faded');
+}
+
 // Получения серидины объекта
 function getCoordinates(object) {
   var coordinates = {
+    con
     x: object.offsetLeft + object.offsetWidth / 2,
     y: object.offsetTop + object.offsetHeight / 2
   };
@@ -116,14 +122,14 @@ function getCoordinates(object) {
 }
 
 // Вызываем функцию получения центра объекта
-var coordinates = getCoordinates(pinMain);
+var coordinatesCenterPin = getCoordinates(pinMain);
 
 // функция передачи кординат пина в инпут
 function setAddress(x, y) {
   address.value = x + ', ' + y;
 }
 
-setAddress(coordinates.x, coordinates.y);
+setAddress(coordinatesCenterPin.x, coordinatesCenterPin.y);
 
 var onButtonClick = function () {
   // Показываем карту
@@ -204,34 +210,34 @@ var MAX_Y = 630;
 var mapPin = document.querySelector('.map__pin');
 // pinMain.addEventListener('click', onButtonClick);
 
-  pinMain.addEventListener('mousedown', function (evt) {
-
+pinMain.addEventListener('mousedown', function (evt) {
   // Вызываю функцию от рисовки остальных пинов и разблокировки формы.
   onButtonClick();
 
-  evt.preventDefault();
-  var startCoords = {
+  // Запомним координаты точки, с которой мы начали перемещать пин
+  var startCoordsPin = {
     x: evt.clientX,
     y: evt.clientY
   };
 
+  // При каждом движении мыши нам нужно обновлять смещение относительно первоначальной точки,
+  //  чтобы диалог смещался на необходимую величину.
   var onMouseMove = function (moveEvt) {
-    moveEvt.preventDefault();
-
-    var shift = {
-      x: startCoords.x - moveEvt.clientX,
-      y: startCoords.y - moveEvt.clientY
+      var shift = {
+      x: startCoordsPin.x - moveEvt.clientX,
+      y: startCoordsPin.y - moveEvt.clientY
     };
 
-    startCoords = {
+    startCoordsPin = {
       x: moveEvt.clientX,
       y: moveEvt.clientY
     };
-    console.log(startCoords);
+
     mapPin.style.top = (mapPin.offsetTop - shift.y) + 'px';
     mapPin.style.left = (mapPin.offsetLeft - shift.x) + 'px';
   };
 
+  // При отпускании кнопки мыши нужно переставать слушать события движения мыши.
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
 
@@ -239,7 +245,10 @@ var mapPin = document.querySelector('.map__pin');
     document.removeEventListener('mouseup', onMouseUp);
   };
 
+  // Добавим обработчики события передвижения мыши.
   document.addEventListener('mousemove', onMouseMove);
+
+  // Добавим обработчики события отпускания кнопки мыши.
   document.addEventListener('mouseup', onMouseUp);
 });
 
