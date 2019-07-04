@@ -242,24 +242,27 @@ mainPinElement.addEventListener('mousedown', function (evt) {
       y: mainPinElement.offsetTop - (startCoordsPin.y - moveEvt.clientY)
     };
 
-    startCoordsPin = {
-      x: moveEvt.clientX,
-      y: moveEvt.clientY
-    };
+    // startCoordsPin = {
+    //   x: moveEvt.clientX,
+    //   y: moveEvt.clientY
+    // };
 
     // Вызываем функцию получения центра объекта
     var newCoordinatesPin = getMainPinCoordinates();
     // Передаем новые координаты в инпут
     setAddress(newCoordinatesPin.x, newCoordinatesPin.y);
-    var isCoordsValid = validateCoords(startCoordsPin);
+
+    var isCoordsValid = validateCoords(shift);
 
     //  Записываем нашему пину новые координаты
     if (isCoordsValid.x) {
       mainPinElement.style.left = shift.x + 'px';
+      startCoordsPin.x = moveEvt.clientX;
     }
 
     if (isCoordsValid.y) {
       mainPinElement.style.top = shift.y + 'px';
+      startCoordsPin.y = moveEvt.clientY;
     }
   };
 
