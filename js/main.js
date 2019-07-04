@@ -126,8 +126,8 @@ function enableFormElements(arr) {
 
 function getMainPinCoordinates() {
   return {
-    x: Math.floor(mainPinElement.offsetLeft + MAIN_PIN_WIDTH / 2),
-    y: Math.floor(isMapActive() ? mainPinElement.offsetTop + MAIN_PIN_HEIGHT : mainPinElement.offsetTop + MAIN_PIN_HEIGHT / 2)
+    x: mainPinElement.offsetLeft + MAIN_PIN_WIDTH / 2,
+    y: isMapActive() ? mainPinElement.offsetTop + MAIN_PIN_HEIGHT : mainPinElement.offsetTop + MAIN_PIN_HEIGHT / 2
   };
 }
 
@@ -236,21 +236,10 @@ mainPinElement.addEventListener('mousedown', function (evt) {
   // При каждом движении мыши нам нужно обновлять смещение относительно первоначальной точки,
   //  чтобы диалог смещался на необходимую величину.
   var onMouseMove = function (moveEvt) {
-
     var shift = {
       x: mainPinElement.offsetLeft - (startCoordsPin.x - moveEvt.clientX),
       y: mainPinElement.offsetTop - (startCoordsPin.y - moveEvt.clientY)
     };
-
-    // startCoordsPin = {
-    //   x: moveEvt.clientX,
-    //   y: moveEvt.clientY
-    // };
-
-    // Вызываем функцию получения центра объекта
-    var newCoordinatesPin = getMainPinCoordinates();
-    // Передаем новые координаты в инпут
-    setAddress(newCoordinatesPin.x, newCoordinatesPin.y);
 
     var isCoordsValid = validateCoords(shift);
 
@@ -264,6 +253,11 @@ mainPinElement.addEventListener('mousedown', function (evt) {
       mainPinElement.style.top = shift.y + 'px';
       startCoordsPin.y = moveEvt.clientY;
     }
+
+    // Вызываем функцию получения центра объекта
+    var newCoordinatesPin = getMainPinCoordinates();
+    // Передаем новые координаты в инпут
+    setAddress(newCoordinatesPin.x, newCoordinatesPin.y);
   };
 
   function validateCoords(coordinates) {
