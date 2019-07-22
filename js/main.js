@@ -6,12 +6,12 @@
 
   function activatePage() {
     var pins = window.map.createPins(adsInfo);
-    window.map.enableFormElements(formElements);
+    // window.utils.enableFormElements(formElements);
     // вызов функции insertPins для отрисовки пинов
     window.map.insertPins(pins);
     // Показываем карту и включаем элементы фильтра
     window.map.onButtonClick();
-    // Функция удаляет класс ad-form--disabled у формы
+    // Функция удаляет класс ad-form--disabled у формы  и fieldset у фильтра
     window.form.activateForm();
   }
   // Этот callback запускает функцию activatePage

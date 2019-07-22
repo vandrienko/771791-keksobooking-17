@@ -8,7 +8,7 @@
   var formElements = adForm.querySelectorAll('fieldset');
   // console.log('form    Elements', formElements);
   // блокируем элементы формы
-  window.map.disableFormElements(formElements);
+  window.utils.disableFormElements(formElements);
 
   // функция передачи кординат пина в инпут
   function setAddress(x, y) {
@@ -34,6 +34,7 @@
   // Функция удаляет класс ad-form--disabled у формы что бы был виден фильтр
   function activateForm() {
     adForm.classList.remove('ad-form--disabled');
+    window.utils.enableFormElements(formElements);
   }
 
   function onHousTypeElementChange(evt) {
@@ -72,7 +73,7 @@
 
   window.form = {
     setAddress: setAddress,
-    formElements: formElements,
+    // formElements: formElements,
     activateForm: activateForm
   };
 })();

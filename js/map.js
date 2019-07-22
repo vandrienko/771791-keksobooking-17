@@ -38,20 +38,8 @@
   }
 
   // блокируем элементы фильтра
-  disableFormElements(mapFilter);
-  disableFormElements(housingFeatures);
-  function disableFormElements(arr) {
-    for (var i = 0; i < arr.length; i++) {
-      arr[i].disabled = true;
-    }
-  }
-
-  // включаем элементы формы
-  function enableFormElements(arr) {
-    for (var i = 0; i < arr.length; i++) {
-      arr[i].disabled = false;
-    }
-  }
+  window.utils.disableFormElements(mapFilter);
+  window.utils.disableFormElements(housingFeatures);
 
   var onButtonClick = function () {
     // Показываем карту
@@ -62,9 +50,7 @@
     // enableFormElements(window.forms.formElements);
     // Включаем фильтр
     // activateForm();
-    // включаем элементы фильтра
-    enableFormElements(mapFilter);
-    enableFormElements(housingFeatures);
+
   };
 
   function getMainPinCoordinates() {
@@ -108,6 +94,9 @@
   // Функция удаеляет класс map--faded у элемента map
   function activateMap() {
     map.classList.remove('map--faded');
+    // включаем элементы фильтра
+    window.utils.enableFormElements(mapFilter);
+    window.utils.enableFormElements(housingFeatures);
   }
 
   // +++++++++++++++++++++++++ module5-task1 ++++++++++++++++++++++++++++++
@@ -190,9 +179,9 @@
     activateMap: activateMap,
     insertPins: insertPins,
     createPins: createPins,
-    disableFormElements: disableFormElements,
+    // disableFormElements: disableFormElements,
     onButtonClick: onButtonClick,
-    enableFormElements: enableFormElements,
+    // enableFormElements: enableFormElements,
     coordinatesCenterPin: coordinatesCenterPin,
     setMouseMoveCallback: setMouseMoveCallback,
     setMouseUpCallback: setMouseUpCallback,
